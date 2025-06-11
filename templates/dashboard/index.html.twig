@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2 class="mb-4">🧾 Enchères en cours</h2>
+
+    {% if app.user %}
+        <div class="alert alert-info">
+            👤 Connecté en tant que <strong>{{ app.user.nom }}</strong><br>
+            💰 Jetons restants : <strong>{{ app.user.jetons }}</strong>
+        </div>
+    {% endif %}
+
+    {% if encheres is empty %}
+        <div class="alert alert-warning">Aucune enchère active pour le moment.</div>
+    {% else %}
+        <div class="row">
+            {% for enchere in encheres %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">{{ enchere.produit.nomProduit }}</h5>
+                            <p class="card-text">
+                                📝 <strong>Description :</strong> {{ enchere.produit.description }}<br>
+                                💎 <strong>Valeur estimée :</strong> {{ enchere.produit.valeurEstimee }} €<br>
+                                📅 <strong>Début :</strong> {{ enchere.dateDebut|date('d/m/Y H:i') }}<br>
+                                ⏰ <strong>Fin :</strong> {{ enchere.dateFin|date('d/m/Y H:i') }}<br>
+                                🪙 <strong>Jetons requis :</strong> {{ enchere.coutJeton }}
+                            </p>
+                            <a href="{{ path('app_miser', { id: enchere.id }) }}" class="btn btn-success w-100">
+                                🎯 Participer à cette enchère
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

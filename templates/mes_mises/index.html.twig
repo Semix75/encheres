@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes mises{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h2 class="mb-4">📋 Historique de mes mises</h2>
+
+        {% if mises is empty %}
+            <div class="alert alert-info">Vous n'avez encore participé à aucune enchère.</div>
+        {% else %}
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Produit</th>
+                        <th>Montant</th>
+                        <th>Date de mise</th>
+                        <th>Remboursée</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mise in mises %}
+                        <tr>
+                            <td>{{ mise.enchere.produit.nomProduit }}</td>
+                            <td>{{ mise.montant }} 🪙</td>
+                            <td>{{ mise.dateMise|date('d/m/Y H:i') }}</td>
+                            <td>
+                                {% if mise.remboursee %}
+                                    ✅ Oui
+                                {% else %}
+                                    ❌ Non
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        <a href="{{ path('app_dashboard') }}" class="btn btn-primary mt-3">⬅ Retour au tableau de bord</a>
+    </div>
+{% endblock %}

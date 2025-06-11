@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Faire une mise{% endblock %}
+
+{% block body %}
+    <h2>Faire une mise sur : {{ enchere.produit.nom }}</h2>
+
+    {{ form_start(form) }}
+        {{ form_row(form.montant) }}
+        <button class="btn btn-success">Valider ma mise</button>
+    {{ form_end(form) }}
+{% endblock %}

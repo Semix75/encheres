@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats des enchères{% endblock %}
+
+{% block body %}
+    <h2>📊 Résultats des enchères terminées</h2>
+
+    {% if encheres is empty %}
+        <p>Aucune enchère terminée pour l’instant.</p>
+    {% else %}
+        <ul class="list-group mt-3">
+            {% for enchere in encheres %}
+                <li class="list-group-item">
+                    <strong>{{ enchere.produit.nom }}</strong> <br>
+                    🕒 Fin : {{ enchere.dateFin|date('d/m/Y H:i') }} <br>
+                    🎯 Gagnant : 
+                    {% set mises = enchere.mises|sort((a, b) => a.montant <=> b.montant) %}
+                    {% if mises|length > 0 %}
+                        {{ mises[0].utilisateur.nom }} avec {{ mises[0].montant }} jetons
+                    {% else %}
+                        Aucun participant
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

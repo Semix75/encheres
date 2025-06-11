@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Enchères Inversées{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body class="container py-5">
+
+<nav class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <a href="{{ path('app_home') }}">🏠 Accueil</a>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="{{ path('app_dashboard') }}">Dashboard</a>
+            <a href="{{ path('app_mes_mises') }}">📄 Mes mises</a>
+        {% endif %}
+    </div>
+    <div>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <span class="text-muted">👤 {{ app.user.nom }}</span>
+        {% endif %}
+    </div>
+</nav>
+
+
+{% block body %}{% endblock %}
+
+<!-- ✅ Modal Bootstrap pour messages flash -->
+<div class="modal fade" id="flashModal" tabindex="-1" aria-labelledby="flashModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="flashModalLabel">Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <div id="flashMessageContent"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Scripts Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ✅ Script pour afficher automatiquement les messages flash -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        {% for message in app.flashes('info') %}
+            const flashContent = document.getElementById("flashMessageContent");
+            flashContent.innerHTML = `{{ message|e('js') }}`;
+            const modal = new bootstrap.Modal(document.getElementById('flashModal'));
+            modal.show();
+        {% endfor %}
+
+        {% for message in app.flashes('success') %}
+            const flashContent = document.getElementById("flashMessageContent");
+            flashContent.innerHTML = `{{ message|e('js') }}`;
+            const modal = new bootstrap.Modal(document.getElementById('flashModal'));
+            modal.show();
+        {% endfor %}
+    });
+</script>
+
+</body>
+</html>
