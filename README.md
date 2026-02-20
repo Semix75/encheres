@@ -1,73 +1,100 @@
-# Système d'Enchères – Symfony
+# Système d’Enchères – Symfony | Logique métier avancée
 
-Application web d’enchères développée avec Symfony, basée sur un système de jetons et une logique de **plus petit montant unique**.
+Application web d’enchères développée avec Symfony mettant en œuvre une logique métier spécifique : le principe du **plus petit montant unique**.
 
-## Concept
-
-Les utilisateurs participent à une enchère en proposant un montant.
-
-À la fin de l’enchère, le gagnant est l’utilisateur ayant proposé **le plus petit montant joué une seule fois**.
-
-Les montants proposés plusieurs fois sont automatiquement éliminés.
+Ce projet démontre la capacité à implémenter une règle algorithmique personnalisée, gérer des transactions utilisateurs (jetons) et structurer une application web avec une architecture propre.
 
 ---
 
-## Fonctionnalités
+## Contexte
 
-### Utilisateur
-- Inscription / Authentification
-- Consultation des enchères en cours
-- Participation via une mise
-- Déduction automatique de jetons
-- Historique personnel via la page "Mes mises"
+Développement d’une plateforme d’enchères avec :
 
-### Système
-- Calcul automatique du gagnant à la fin de l’enchère
-- Exclusion des montants doublés
-- Gestion des enchères terminées avec affichage du gagnant
-- Possibilité d’enchère sans gagnant si aucun montant unique
+- Système de jetons virtuels
+- Participation sécurisée aux enchères
+- Calcul automatique du gagnant
+- Gestion des doublons
+- Suivi des mises par utilisateur
+
+Le projet met l’accent sur la cohérence métier et l’intégrité des données.
+
+---
+
+## Logique métier principale
+
+Le gagnant d’une enchère est l’utilisateur ayant proposé :
+
+> Le plus petit montant joué une seule fois.
+
+Les montants proposés plusieurs fois sont automatiquement exclus du calcul.
+
+Cette règle impose :
+- Analyse des données
+- Filtrage des doublons
+- Tri algorithmique
+- Gestion des cas limites (aucun montant unique)
+
+---
+
+## Points techniques forts
+
+- Architecture MVC avec Symfony
+- Doctrine ORM (relations ManyToOne)
+- Système transactionnel de jetons (déduction automatique)
+- Migrations Doctrine (gestion maîtrisée de la base)
+- Implémentation d’un algorithme métier personnalisé
+- Séparation claire entre contrôleurs, services et entités
+- Gestion des statuts d’enchères (en cours / terminée)
 
 ---
 
 ## Modèle de données
 
-- **Utilisateur**
+- `Utilisateur`
   - Solde de jetons
-- **Enchere**
-  - Dates, statut (en cours / terminée)
-- **Mise**
+- `Enchere`
+  - Dates, statut
+- `Mise`
   - Montant
-  - Date de mise
+  - Date
   - Statut de remboursement
   - Relation avec Utilisateur
   - Relation avec Enchere
 
----
-
-## Règles métier
-
-- Chaque mise consomme des jetons
-- Le calcul du gagnant se fait uniquement à la clôture
-- Les montants identiques sont éliminés
-- Le plus petit montant unique remporte l’enchère
+Les relations garantissent l’intégrité référentielle et la cohérence des participations.
 
 ---
 
-## Stack technique
+## Compétences démontrées
+
+- Conception d’une règle métier non standard
+- Manipulation avancée de collections et filtrage algorithmique
+- Gestion d’un système transactionnel
+- Conception d’un modèle relationnel cohérent
+- Maîtrise de Symfony & Doctrine
+- Gestion d’un workflow applicatif complet (création → participation → clôture → calcul)
+
+---
+
+## Technologies
 
 - Symfony
 - Doctrine ORM
 - Twig
-- Base de données relationnelle
-- Migrations Doctrine (gestion manuelle)
+- MySQL
+- PHP
 
 ---
 
 ## Objectif pédagogique
 
-Ce projet met en pratique :
-- L’architecture MVC avec Symfony
-- La gestion des relations Doctrine (ManyToOne)
-- La mise en place d’une logique métier spécifique
-- La gestion d’un système transactionnel (jetons)
-- La manipulation d’algorithmes de sélection (plus petit montant unique)
+Simuler un cas métier réel nécessitant :
+- Une logique algorithmique personnalisée
+- Une gestion rigoureuse des données
+- Une architecture maintenable et évolutive
+
+---
+
+## Auteur
+
+Osseni Semiyou
